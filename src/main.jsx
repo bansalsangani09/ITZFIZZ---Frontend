@@ -61,12 +61,28 @@ function App() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Small page-load reveal only for the chrome. The main sequence is scroll-driven.
-      gsap.from('.nav-inner', { y: -18, opacity: 0, duration: .7, ease: 'power3.out' })
-      gsap.from('.eyebrow, .copy-wrap, .story-link, .chapter-nav, .scroll-cue, .side-note, .progress-cue', {
-        y: 14, opacity: 0, duration: .65, stagger: .06, delay: .12, ease: 'power3.out'
-      })
+      // Initial Page Load Animation (Requirement 2): Headline & statistics reveal on load
+      const loadTl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
+      loadTl.from('.nav-inner', { y: -18, opacity: 0, duration: 0.7 })
+      loadTl.from('.eyebrow', { y: 14, opacity: 0, duration: 0.5 }, '-=0.4')
+      loadTl.fromTo('.headline-char',
+        { yPercent: 90, opacity: 0, rotateX: -35 },
+        { yPercent: 0, opacity: 1, rotateX: 0, stagger: 0.03, duration: 0.75, ease: 'back.out(1.2)' },
+        '-=0.3'
+      )
+      loadTl.from('.copy-wrap, .story-link', { y: 16, opacity: 0, stagger: 0.1, duration: 0.5 }, '-=0.2')
+      // Statistics cards animate in one by one with a subtle delay
+      loadTl.fromTo('.metric-card',
+        { y: 35, opacity: 0, scale: 0.96 },
+        { y: 0, opacity: 1, scale: 1, stagger: 0.12, duration: 0.6, ease: 'power2.out' },
+        '-=0.2'
+      )
+      loadTl.from('.chapter-nav, .scroll-cue, .side-note, .progress-cue', {
+        y: 14, opacity: 0, duration: 0.5, stagger: 0.06
+      }, '-=0.3')
+
+      // Scroll-Based Animation (Requirement 3): Car movement, road trails, and parallax driven purely by scroll
       const sequence = gsap.timeline({
         defaults: { ease: 'power2.out' },
         scrollTrigger: {
@@ -80,20 +96,6 @@ function App() {
           onUpdate: self => setActive(Math.min(2, Math.floor(self.progress * 3)))
         }
       })
-
-      // PowerPoint-like reveal: each character appears only as the visitor scrolls.
-      sequence.fromTo('.headline-char',
-        { yPercent: 115, opacity: 0, rotateX: -45 },
-        { yPercent: 0, opacity: 1, rotateX: 0, stagger: { each: .035, from: 'start' }, duration: .72, ease: 'back.out(1.15)' },
-        0.04
-      )
-      // Then reveal the four impact blocks one after another.
-      sequence.fromTo('.metric-card',
-        { y: 42, opacity: 0, scale: .96 },
-        { y: 0, opacity: 1, scale: 1, stagger: .13, duration: .55, ease: 'power3.out' },
-        1.25
-      )
-      sequence.fromTo('.hero-copy, .story-link', { y: 18, opacity: 0 }, { y: 0, opacity: 1, stagger: .12, duration: .4 }, 1.95)
 
       // The car starts on the left-hand entry of the road and follows its rising curve.
       // All movement is scrubbed by ScrollTrigger, so the car never auto-plays.
