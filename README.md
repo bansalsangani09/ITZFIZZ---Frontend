@@ -4,7 +4,9 @@
 [![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![GSAP](https://img.shields.io/badge/GSAP-3.13-0AE448?logo=greensock&logoColor=white)](https://gsap.com/)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel&logoColor=white)](https://vercel.com/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-itzfizz--frontend.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://itzfizz-frontend.vercel.app/)
+
+> 🚀 **Live Deployment**: [https://itzfizz-frontend.vercel.app/](https://itzfizz-frontend.vercel.app/)
 
 A high-performance, scroll-driven interactive hero experience built with **React**, **Vite**, **GSAP / ScrollTrigger**, and **Tailwind CSS**.
 
